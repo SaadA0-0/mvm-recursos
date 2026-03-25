@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <form action="dades-formulari.html" method="GET">
+        <h2>Crea la teva fitxa de membre</h2>
+        
+        <label for="nom">Nom:</label>
+        <input type="text" id="nom" name="nom" required>
+        <label for="vigor">En vigor</label>
+        <input type="checkbox" id="vigor" name="vigor">
+        <br>
+
+        <label for="rol">Càrrec:</label>
+        <input type="text" id="carrec" name="carrec">
+        <br>
+
+        <label for="bio">Biografia:</label>
+        <textarea id="bio" name="bio" rows="3"></textarea>
+        <br>
+        <div id="cuadre_alies">
+            <table>
+                <tr>
+                    <td><label for="alies1">Àlies 1:</label></td>
+                    <td><input type="text" id="alies1" name="alies1"></td>
+                </tr>
+                <tr>
+                    <td><label for="alies2">Àlies 2:</label></td>
+                    <td><input type="text" id="alies2" name="alies2"></td>
+                </tr>
+                <tr>
+                    <td><label for="alies3">Àlies 3:</label></td>
+                    <td><input type="text" id="alies3" name="alies3"></td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <button type="submit">Enviar dades</button>
+    </form>
+</body>
+</html>
