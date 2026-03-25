@@ -10,6 +10,7 @@ Ha de constar dels següents elements:
 - un fitxer `index.html` amb l'estructura sense estils
 - un fitxer `styles.css` amb els estils a part
 - un fitxer `script.js` amb l'interactivitat per canviar entre mode clar i mode fosc
+- un resum `resum.md` en Markdown explicant tot el que heu fet
 
 Heu d'incloure:
 - El vostre horari complet amb les diferents assignatures per colors (els que volgeu, pero que no facin mal a l'ull)
