@@ -370,8 +370,31 @@ També podem limitar els resultats de la cerca
 SELECT * FROM usuaris LIMIT 5;
 ```
 
-
-
 ### `UPDATE`
+Permet **modificar** dades **existents** a la base de dades
+
+```sql
+UPDATE nom_taula SET columna = valor_nou WHERE condicio;
+```
+
+
+> [!CAUTION]
+>
+> Revisa que tinguis sempre el `WHERE` a la teva sentència `UPDATE`, si no, estaràs **MODIFICANT TOTS ELS REGISTRES DE LA TAULA**
+>
+> Recorda sempre [aquesta cançó](https://www.youtube.com/watch?v=i_cVJgIz_Cs&list=RDi_cVJgIz_Cs&start_radio=1)
+
 
 ### `DELETE`
+Permet **eliminar** dades **existents** a la base de dades
+
+```sql
+DELETE FROM nom_taula WHERE condicio;
+```
+ Aquí no hem d'indicar la columna ja que estem eliminant **tot el registre**
+
+> [!CAUTION]
+>
+> Al igual que amb els `UPDATE`, revisa que tinguis sempre el `WHERE`, altrament, estaràs **ELIMINANT TOTS ELS REGISTRES DE LA TAULA**
+>
+> Recorda sempre [aquesta cançó](https://www.youtube.com/watch?v=i_cVJgIz_Cs&list=RDi_cVJgIz_Cs&start_radio=1)
