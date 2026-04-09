@@ -87,3 +87,12 @@ També haurás d'informar els actors que participen a aquestes películes
 
 ### 2.1
 Hem de corregir el títol de totes les pel.lícules que acaben en 'UNDERGROUND' per 'FROM THE UNDERGROUND'
+
+### 2.2
+Hem d'afegir una nova columna anomenada `novetat` a la taula `film`. Aquesta nova columna només ha de permetre guardar valors `true` o `false`
+Un cop fet aixó: 
+- farem que les pel.lícules que ja existien abans dels nostres inserts (el seu film_id arriba fins el 1000) tinguin el valor `false` al camp `novetat`
+- farem que les pel.lícules que que hem inserit nosaltres (el seu film_id serà a partir del 1000) tinguin el valor `true` al camp `novetat`
+
+### 2.3
+Com que el títol de totes les noves pel.lícules inserides està en anglés, li assignarem aquest idioma, però farem servir l'anglès que hem afegit nosaltres, no el que ja existía (si ho has fet tot bé, el seu ID deuría ser el `11`, pero segur que no es el `1`)
