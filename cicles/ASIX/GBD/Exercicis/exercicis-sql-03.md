@@ -81,7 +81,7 @@ Et pots inventar la durada, dates, etc... pero respectant la coherencia de la ba
 
 Fes servir, com idioma, alguns dels nous idiomes que has inserit previament.
 
-També haurás d'informar els actors que participen a aquestes películes
+També haurás d'informar els actors que participen a aquestes películes. El que farem es afegir un actor aleatori, de entre els actors que existeixen, a unes quantes pel.lícules (no cal fer-ho a totes).
 
 ## 2. `UPDATE`
 
