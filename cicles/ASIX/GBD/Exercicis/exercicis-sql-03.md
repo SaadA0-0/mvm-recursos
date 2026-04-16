@@ -104,3 +104,11 @@ Ens acaben d'avisar de que algú ha inserit per error un idioma duplicat ( ¬_¬
 
 ### 3.2
 Ens informen que tota la saga `FROM THE DEEP A B Y S S` té exemplar defectuosos i, com s'han eliminat del magatzem, nosaltres hem de eliminar qualsevol pel.lícula d'aquesta saga de la tabla `film`.
+
+## 4. ALTRES
+
+### 4.1
+Volem crear una taula nova anomenada `absolute_cinema` que tingui exactament la mateix estructura que `film` pero que només contingui les pel.lícules que al seu titol tenen les paraules "NINJAS" o "ROBOTS".
+
+### 4.2
+Un cop fet el punt anterior, ens adonem que les pel.lícules sobre "ZOMBIES" també son dignes de estar a la taula `absolute_cinema`, així que hem de posar-li remei.
