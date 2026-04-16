@@ -96,3 +96,11 @@ Un cop fet aixó:
 
 ### 2.3
 Com que el títol de totes les noves pel.lícules inserides està en anglés, li assignarem aquest idioma, però farem servir l'anglès que hem afegit nosaltres, no el que ja existía (si ho has fet tot bé, el seu ID deuría ser el `11`, pero segur que no es el `1`)
+
+## 3. `DELETE`
+
+### 3.1
+Ens acaben d'avisar de que algú ha inserit per error un idioma duplicat ( ¬_¬). Resulta que tenim dues vegades l'idioma `English` i hem d'eliminar el segon, que es el més antic.
+
+### 3.2
+Ens informen que tota la saga `FROM THE DEEP A B Y S S` té exemplar defectuosos i, com s'han eliminat del magatzem, nosaltres hem de eliminar qualsevol pel.lícula d'aquesta saga de la tabla `film`.
