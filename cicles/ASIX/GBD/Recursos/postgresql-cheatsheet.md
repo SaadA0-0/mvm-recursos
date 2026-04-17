@@ -398,3 +398,91 @@ DELETE FROM nom_taula WHERE condicio;
 > Al igual que amb els `UPDATE`, revisa que tinguis sempre el `WHERE`, altrament, estaràs **ELIMINANT TOTS ELS REGISTRES DE LA TAULA**
 >
 > Recorda sempre [aquesta cançó](https://www.youtube.com/watch?v=i_cVJgIz_Cs&list=RDi_cVJgIz_Cs&start_radio=1)
+
+
+## Stored Procedures
+
+### Què són els PROCEDURES en una Base de Dades?
+
+Un **Procediment Emmagatzemat** (Stored Procedure) és un conjunt d'instruccions SQL i estructures de control (com variables, bucles o condicionals) que es compila i es desa directament al servidor de la base de dades. En lloc d'enviar múltiples consultes des de la teva aplicació (backend) a la base de dades una per una, simplement invoques o "crides" el procediment pel seu nom.
+
+#### En quins casos s'utilitzen?
+
+1. **Reutilització i manteniment de codi:** Si tens una lògica de negoci molt específica i complexa (per exemple, un tancament comptable a final de mes o la liquidació de carretons de compra) que s'utilitza des de diverses aplicacions o serveis, centralitzar-la a la base de dades evita haver de reprogramar-la en diferents llenguatges.
+2. **Millora del rendiment:** En executar múltiples operacions directament dins del servidor, redueixes dràsticament la latència i el trànsit de xarxa entre la teva aplicació i la base de dades. A més, el motor de la base de dades sol desar a la memòria cau el pla d'execució del procediment, fent-lo més ràpid en usos posteriors.
+3. **Seguretat robusta:** Pots concedir als usuaris i aplicacions permisos exclusivament per executar el *procedure*, sense donar-los permisos de lectura o escriptura (`SELECT`, `UPDATE`, `DELETE`) sobre les taules reals. Això és una barrera excel·lent contra atacs i errors de manipulació.
+4. **Control de transaccions complexes:** Són ideals quan necessites fer operacions múltiples que s'han de tractar com una única unitat (el clàssic "tot o res").
+
+---
+
+### PROCEDURES a PostgreSQL
+
+A PostgreSQL, històricament els desenvolupadors utilitzaven només **Funcions** (`FUNCTIONS`) per agrupar lògica. No obstant això, a partir de la versió 11 de PostgreSQL, es van introduir els veritables **Procediments** (`PROCEDURES`). 
+
+**Quina és la diferència clau a PostgreSQL?**
+Les funcions sempre s'executen dins de la transacció que les crida i *sempre retornen un valor*. Per contra, els *procedures* **poden controlar transaccions de forma interna**. Això significa que dins del codi d'un *procedure* de PostgreSQL pots executar explícitament `COMMIT` (per desar els canvis fins a aquest punt) o `ROLLBACK` (per desfer-los). A més, no retornen cap valor directament.
+
+#### Exemple Pràctic: Transferència Bancària
+
+Imagina que tenim una taula de comptes bancaris i volem transferir diners d'un a un altre. Aquest és el cas d'ús perfecte per a un Procedure, ja que requereix fer diversos `UPDATE` i necessitem controlar la transacció perquè els diners no "desapareguin" si ocorre un error a la meitat del procés.
+
+**1. Creem la taula de prova:**
+
+```sql
+CREATE TABLE comptes (
+    id SERIAL PRIMARY KEY,
+    titular VARCHAR(50) NOT NULL,
+    saldo NUMERIC(10, 2) NOT NULL DEFAULT 0.00
+);
+
+INSERT INTO comptes (titular, saldo) VALUES 
+('Ana', 1000.00),
+('Carlos', 500.00);
+```
+
+**2. Creem el PROCEDURE en PL/pgSQL:**
+
+Escriurem un procediment que resti saldo d'un compte i el sumi a l'altre. Si el compte d'origen no té fons suficients, llançarem una excepció.
+
+```sql
+CREATE OR REPLACE PROCEDURE transferir_diners(
+    compte_origen INT, 
+    compte_desti INT, 
+    import NUMERIC
+)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    saldo_actual NUMERIC;
+BEGIN
+    -- 1. Verifiquem el saldo del compte origen
+    SELECT saldo INTO saldo_actual FROM comptes WHERE id = compte_origen;
+    
+    IF saldo_actual < import THEN
+        RAISE EXCEPTION 'Saldo insuficient al compte dorigen.';
+    END IF;
+
+    -- 2. Restem els diners del compte origen
+    UPDATE comptes SET saldo = saldo - import WHERE id = compte_origen;
+    
+    -- 3. Sumem els diners al compte destí
+    UPDATE comptes SET saldo = saldo + import WHERE id = compte_desti;
+
+    -- 4. Confirmem la transacció permanentment
+    COMMIT;
+    
+    RAISE NOTICE 'Transferència de % completada amb èxit.', import;
+END;
+$$;
+```
+
+**3. Executem (Cridem) al PROCEDURE:**
+
+A diferència de les funcions que es criden amb un `SELECT`, els procediments s'invoquen amb la instrucció `CALL`.
+
+```sql
+-- Transferim 200 de l'Ana (id=1) a en Carlos (id=2)
+CALL transferir_diners(1, 2, 200.00);
+```
+
+En executar aquesta línia, PostgreSQL processa tota la lògica al servidor. L'Ana passarà a tenir 800.00 i en Carlos 700.00. Si intentéssim executar `CALL transferir_diners(1, 2, 5000.00);`, el procediment llançaria l'excepció i cancel·laria la transacció abans de tocar els diners de ningú.
