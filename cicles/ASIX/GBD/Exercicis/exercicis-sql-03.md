@@ -105,10 +105,22 @@ Ens acaben d'avisar de que algú ha inserit per error un idioma duplicat ( ¬_¬
 ### 3.2
 Ens informen que tota la saga `FROM THE DEEP A B Y S S` té exemplar defectuosos i, com s'han eliminat del magatzem, nosaltres hem de eliminar qualsevol pel.lícula d'aquesta saga de la tabla `film`.
 
-## 4. ALTRES
+## 4. `CREATE TABLE` / `INSERT` en base al resultat d'una sentència `SELECT`
 
 ### 4.1
 Volem crear una taula nova anomenada `absolute_cinema` que tingui exactament la mateix estructura que `film` pero que només contingui les pel.lícules que al seu titol tenen les paraules "NINJAS" o "ROBOTS".
 
 ### 4.2
 Un cop fet el punt anterior, ens adonem que les pel.lícules sobre "ZOMBIES" també son dignes de estar a la taula `absolute_cinema`, així que hem de posar-li remei.
+
+## 5. PROCEDURES
+### 5.1 Manteniment de pel.lícules "orfes"
+Necessitem crear un procediment que faci el següent:
+- Cerqui les pel.lícules `film` "orfes", es a dir, que no tenen asignat cap actor (cap correspondència a la taula `film_actor`)
+- Per cadascuna d'aquestes pel.lícules, li assignem 3 actors aleatoris a escollir entre tots els actors existents a la taula `actor`
+
+Podeu fer servir més d'un procediment si voleu pero el procediment principal s'hauria de cridar d'una manera similar a
+
+```sql
+CALL assignar_actors_films_orfes()
+```
