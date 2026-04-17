@@ -417,7 +417,7 @@ Un **Procediment Emmagatzemat** (Stored Procedure) és un conjunt d'instruccions
 
 ### PROCEDURES a PostgreSQL
 
-A PostgreSQL, històricament els desenvolupadors utilitzaven només **Funcions** (`FUNCTIONS`) per agrupar lògica. No obstant això, a partir de la versió 11 de PostgreSQL, es van introduir els veritables **Procediments** (`PROCEDURES`). 
+A PostgreSQL, històricament els desenvolupadors utilitzaven només **Funcions** (`FUNCTIONS`) per agrupar lògica. No obstant això, a partir de la versió 14 de PostgreSQL, es van introduir els veritables **Procediments** (`PROCEDURES`). 
 
 **Quina és la diferència clau a PostgreSQL?**
 Les funcions sempre s'executen dins de la transacció que les crida i *sempre retornen un valor*. Per contra, els *procedures* **poden controlar transaccions de forma interna**. Això significa que dins del codi d'un *procedure* de PostgreSQL pots executar explícitament `COMMIT` (per desar els canvis fins a aquest punt) o `ROLLBACK` (per desfer-los). A més, no retornen cap valor directament.
