@@ -124,3 +124,15 @@ Podeu fer servir més d'un procediment si voleu pero el procediment principal s'
 ```sql
 CALL assignar_actors_films_orfes()
 ```
+
+### 5.2 Controlar el procés de lloguer
+
+Volem controlar el procediment del lloguer de pel.lícules per evitar que es donin situacions absurdes com que un client que no està actiu llogui una pel.lícula sense posar-se al dia en la seva suscripció.
+
+El fet de llogar una pel.lícula, en principi implica:
+- Inserir un registre a la taula `rental`
+- Inserir un registre a la taula `payment`
+
+El que farem es controlar, mitjançant l'ús de `PROCEDURES` i `TRANSACCIONS`, si es fa un insert a la taula `rental`:
+- Si el client no està actiu, farem un `ROLLBACK` de la transacció i llançarem un missatge d'error
+- Si el client està actiu, permetrem fer-ne el pagament i, si tot va bé, farem el `COMMIT`
